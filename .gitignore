@@ -1,0 +1,10 @@
+*.swo
+*.swp
+*~
+tmp/*
+Gemfile.lock
+db/*.sqlite3
+config/config.yml
+config/keyword.rb
+config/pattern.rb
+config/random.txt
