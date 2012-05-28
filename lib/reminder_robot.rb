@@ -9,6 +9,18 @@ module ReminderRobot
     def env
       @env ||= "development"
     end
+
+    def env=(env)
+      @env = env
+    end
+
+    def daemon
+      @daemon ||= false
+    end
+
+    def daemon=(bool)
+      @daemon = bool
+    end
   end
 end
 
