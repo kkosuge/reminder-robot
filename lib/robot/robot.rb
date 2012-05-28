@@ -42,7 +42,7 @@ module ReminderRobot
     end
 
     def run
-      File.open('tmp/robot_pid.txt','w'){ |f| f.write Process.pid }
+      File.open("tmp/#{RR.env}_pid.txt",'w'){ |f| f.write Process.pid }
       @stream_client.userstream do |status|
         status = Hashie::Mash.new(status)
         next unless @filter.catch(status)
