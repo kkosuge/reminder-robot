@@ -44,8 +44,9 @@ module ReminderRobot
     def run
       File.open('tmp/robot_pid.txt','w'){ |f| f.write Process.pid }
       @stream_client.userstream do |status|
+        status = Hashie::Mash.new(status)
         next unless @filter.catch(status)
-        @reply.call(status)
+        @twitter_client.update(@reply.call(status), in_reply_to_status_id: status.id)
       end
     end
 

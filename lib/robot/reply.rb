@@ -15,10 +15,20 @@ module ReminderRobot
       def call(status)
         [@reminder, @pattern].each do |robot| 
           tweet = robot.call(status)
-          return tweet if tweet
+          return reply(tweet,status) if tweet
         end
 
-        @random.sample
+        reply(@random.sample,status)
+      end
+
+      private
+
+      def reply(tweet,status)
+        if status.test.nil?
+          tweet = "@#{status.user.screen_name} #{tweet}" if status.test.nil?
+        else
+          tweet
+        end
       end
     end
   end

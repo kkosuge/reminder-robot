@@ -42,7 +42,7 @@ module ReminderRobot
 
         def tweet
           return false unless datetime = Horai.parse(@status.text)
-          set_record unless @status.test
+          set_record(datetime) if @status.test.nil?
 
           if todo == ''
             "#{datetime}に通知します"

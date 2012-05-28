@@ -10,8 +10,8 @@ module ReminderRobot
     def run
       Thread.new do
         loop do
-          check_record
-          sleep 3
+          check_record rescue next
+          sleep 30
         end
       end
     end
@@ -32,7 +32,7 @@ module ReminderRobot
     end
 
     def check_record
-      ReminderRecorder.before(Time.now).each do |task|
+      ReminderRecord.before(Time.now).each do |task|
         update_tweet task
         task.delete
       end
