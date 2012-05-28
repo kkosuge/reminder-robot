@@ -8,6 +8,9 @@ require 'bundler'
 Bundler.require
 require 'reminder_robot'
 
-ReminderRobot::Robot.new.cli
-ReminderRobot::Reminder.new.run
-ReminderRobot::Robot.new.run
+if ARGV.first == 'cli'
+  ReminderRobot::Robot.new.cli
+else
+  ReminderRobot::Reminder.new.run
+  ReminderRobot::Robot.new.run
+end

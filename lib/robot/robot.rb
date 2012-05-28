@@ -52,8 +52,7 @@ module ReminderRobot
 
     def cli
       loop do
-        print "✖╹◡╹✖  > "
-        text = gets.chomp
+        text = HighLine.new.ask("✖╹◡╹✖  > ") 
         break if text == "exit"
         status = Hashie::Mash.new(text: text, test: true)
         puts  "✖Ｘ◡Ｘ✖ : #{@reply.call(status)}"
