@@ -5,8 +5,11 @@ module ReminderRobot
     def root
       @root ||= Pathname(__FILE__).dirname.realpath + '..'
     end
-  end
 
+    def env
+      @env ||= "development"
+    end
+  end
 end
 
 # Alias for {ReminderRobot}

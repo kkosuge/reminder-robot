@@ -3,14 +3,10 @@
 require 'active_record'
 
 module ReminderRobot
-
-  ActiveRecord::Base.establish_connection(
-    :adapter  => "sqlite3",
-    :database => "#{RR.root.to_s}/db/development.sqlite3",
-    :timeout  => 5000
-  )
-
   class ReminderRecord < ActiveRecord::Base
+    establish_connection ConfigLoader.database 
     self.table_name = :reminders
+
+    scope :before, lambda {|time| where("remind_time < ?", time) }
   end
 end

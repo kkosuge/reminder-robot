@@ -54,7 +54,7 @@ module ReminderRobot
         print "✖╹◡╹✖  > "
         text = gets.chomp
         break if text == "exit"
-        status = Hashie::Mash.new(text: text)
+        status = Hashie::Mash.new(text: text, test: true)
         puts  "✖Ｘ◡Ｘ✖ : #{@reply.call(status)}"
       end
     end
