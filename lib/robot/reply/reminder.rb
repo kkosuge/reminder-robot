@@ -10,21 +10,30 @@ module ReminderRobot
         end
 
         def call(status)
-          @text = status.text
+          @status = status
           return tweet
         end
 
         private
 
+        def set_record(datetime)
+          ReminderRecord.create(
+            status_id: @status.id_str,
+            screen_name: @status.user.screen_name,
+            text: @status.text,
+            remind_time: datetime
+          )
+        end
+
         def todo
           dd = Horai::Parser::DATE_DELIMITER
           td = Horai::Parser::TIME_DELIMITER
-          todo = @text.gsub(@config.filter.include,'')
-                      .gsub(/^.+(?:に(?:なったら)?)/,'')
-                      .gsub( /(?<![\d\/-])(?<!\d)(\d{1,2})#{dd}(\d{1,2})(?!#{dd})/,'')
-                      .gsub(/(?<![\d\/-])(\d{1,2}|\d{4})#{dd}(\d{1,2})#{dd}(\d{1,2})(?!#{dd})/,'')
-                      .gsub(/(?<![\d:])(\d{1,2})#{td}(\d{2})(?!#{td})/,'')
-                      .gsub(/(?<![\d:])(\d{1,2})#{td}(\d{2})#{td}(\d{2})(?!#{td})/,'').chomp
+          todo = @status.text.gsub(@config.filter.include,'')
+                   .gsub(/^.+(?:に(?:なったら)?)/,'')
+                   .gsub( /(?<![\d\/-])(?<!\d)(\d{1,2})#{dd}(\d{1,2})(?!#{dd})/,'')
+                   .gsub(/(?<![\d\/-])(\d{1,2}|\d{4})#{dd}(\d{1,2})#{dd}(\d{1,2})(?!#{dd})/,'')
+                   .gsub(/(?<![\d:])(\d{1,2})#{td}(\d{2})(?!#{td})/,'')
+                   .gsub(/(?<![\d:])(\d{1,2})#{td}(\d{2})#{td}(\d{2})(?!#{td})/,'').chomp
         end
 
         def affix
@@ -32,7 +41,8 @@ module ReminderRobot
         end
 
         def tweet
-          return false unless datetime = Horai.parse(@text)
+          return false unless datetime = Horai.parse(@status.text)
+          set_record unless @status.test
 
           if todo == ''
             "#{datetime}に通知します"
