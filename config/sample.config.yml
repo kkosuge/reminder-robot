@@ -1,3 +1,18 @@
+production:
+  twitter:
+    consumer_key: ''
+    consumer_secret: ''
+    oauth_token: ''
+    oauth_token_secret: ''
+  filter:
+    include: !ruby/regexp /@reminder_robot|＠リマインダー/i
+    exclude: !ruby/regexp /^.*(rt|qt):? @[\w]+.*$/i
+  reply:
+    reminder:
+      affix: ['登録した','セットした']
+  reminder:
+    affix: ["時間","時間です"]
+
 development:
   twitter:
     consumer_key: ''
