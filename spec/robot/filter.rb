@@ -75,9 +75,9 @@ describe ReminderRobot::Robot::Filter do
           end
 
           it 'true を返す' do
-            pending("１分待つの…")
-            sleep 60
+            Timecop.travel(1.minute.from_now)
             @filter.catch(@status).should be_true
+            Timecop.return
           end
         end
 
