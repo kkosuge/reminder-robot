@@ -1,7 +1,8 @@
 *.swo
 *.swp
 *~
-tmp/*
+tmp/*.txt
+tmp/*.pid
 Gemfile.lock
 db/*.sqlite3
 config/config.yml
